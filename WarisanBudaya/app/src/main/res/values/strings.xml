@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Warisan Budaya</string>
+    <string name="snk"><u>Syarat &amp; Ketentuan</u></string>
+    <string name="kliksini"><u>Klik di sini</u></string>
+    <string name="lupapwd"><u>Lupa Password?</u></string>
+
+    <array name="kategoribudaya">
+        <item>Tradisi Lisan</item>
+        <item>Bahasa</item>
+        <item>Naskah Kuno</item>
+        <item>Permainan Tradisional</item>
+        <item>Seni Tradisi</item>
+        <item>Upacara &#47; Ritus</item>
+        <item>Kearifan Lokal</item>
+        <item>Teknologi Tradisional</item>
+        <item>Arsitektur</item>
+        <item>Kain Tradisional</item>
+        <item>Kerajinan Tradisional</item>
+        <item>Kuliner Tradisional</item>
+        <item>Pakaian Adat</item>
+        <item>Senjata Tradisional</item>
+    </array>
+
+    <array name="provinsi">
+        <item>Aceh</item>
+        <item>Bali</item>
+        <item>Banten</item>
+        <item>Bengkulu</item>
+        <item>DI Yogyakarta</item>
+        <item>DKI Jakarta</item>
+        <item>Gorontalo</item>
+        <item>Jambi</item>
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>Jawa Timur</item>
+        <item>Kalimantan Barat</item>
+        <item>Kalimantan Selatan</item>
+        <item>Kalimantan Tengah</item>
+        <item>Kalimantan Timur</item>
+        <item>Kalimantan Utara</item>
+        <item>Kepulauan Bangka Belitung</item>
+        <item>Kepulauan Riau</item>
+        <item>Lampung</item>
+        <item>Maluku</item>
+        <item>Maluku Utara</item>
+        <item>Nusa Tenggara Timur</item>
+        <item>Nusa Tenggara Barat</item>
+        <item>Papua</item>
+        <item>Papua Barat</item>
+        <item>Riau</item>
+        <item>Sulawesi Barat</item>
+        <item>Sulawesi Selatan</item>
+        <item>Sulawesi Tengah</item>
+        <item>Sulawesi Tenggara</item>
+        <item>Sulawesi Utara</item>
+        <item>Sumatera Barat</item>
+        <item>Sumatera Selatan</item>
+        <item>Sumatera Utara</item>
+    </array>
+</resources>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:orientation="vertical"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="8dp"
+			android:orientation="vertical">
+			<TextView
+				android:text="TAMBAH DATA BUDAYA"
+				android:layout_gravity="center"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<TextView
+				android:text="1. Nama karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<EditText
+				android:id="@+id/etNama"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+
+			<TextView
+				android:text="2. Kategori karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<Spinner
+				android:id="@+id/spKategori"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:entries="@array/kategoribudaya"
+				android:drawSelectorOnTop="true"/>
+			<TextView
+				android:text="3. Kondisi karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<RadioGroup
+				android:id="@+id/rgKondisi"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<RadioButton
+					android:id="@+id/rbKon1"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Masih berkembang"/>
+				<RadioButton
+					android:id="@+id/rbKon2"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Sudah berkembang / Terancam punah"/>
+				<RadioButton
+					android:id="@+id/rbKon3"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Punah"/>
+			</RadioGroup>
+			<TextView
+				android:text="4. Lokasi karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<TextView
+				android:text="Provinsi"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<Spinner
+				android:id="@+id/spProv"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:entries="@array/provinsi"
+				android:drawSelectorOnTop="true"/>
+			<TextView
+				android:text="Kabupaten/Kota"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<EditText
+				android:id="@+id/etKabKot"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:text="Kecamatan"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<EditText
+				android:id="@+id/etKec"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:text="Kelurahan/Desa"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<EditText
+				android:id="@+id/etKelDes"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:text="5. Deskripsi karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<EditText
+				android:id="@+id/etDeskripsi"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:lines="5"/>
+			<TextView
+				android:text="6. Pelaku karya budaya"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<EditText
+				android:id="@+id/etPelaku"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:text="7. Foto dengan penjelasan"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+				<Button
+					android:id="@+id/btUnggah"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Unggah"/>
+				<TextView
+					android:id="@+id/tvPath"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"/>
+			</LinearLayout>
+			<ImageView
+				android:id="@+id/imgView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"/>
+			<EditText
+				android:id="@+id/etPenjelasanGbr"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:lines="5"/>
+			<Button
+				android:id="@+id/btTambah"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Tambah Budaya"/>
+			<Button
+				android:id="@+id/btKeluar"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Keluar"/>
+
+		</LinearLayout>
+	</ScrollView>
+
+</LinearLayout>
