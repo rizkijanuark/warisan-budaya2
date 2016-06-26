@@ -4,32 +4,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.*;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.example.srin.warisanbudaya.helper.DBHelper;
+import com.example.srin.warisanbudaya.helper.Validator;
 
 /**
  * Created by SRIN on 4/11/2016.
  */
 public class LoginActivity extends AppCompatActivity {
-    final String PREF_NAME = "WBI_pref";
-    final String PREF_LOGIN = "isLogin";
-    SharedPreferences pref;
-    TextView klik;
-    EditText email,pwd;
-    DBHelper mydb;
-    CheckBox rememberMe;
-    Validator val = new Validator();
+	private SharedPreferences pref;
+	private TextView klik;
+	private EditText email,pwd;
+	private DBHelper mydb;
+	private CheckBox rememberMe;
+	private Validator val = new Validator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        pref = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        pref = getSharedPreferences(PrefData.PREF_NAME, MODE_PRIVATE);
 
         mydb = new DBHelper(this);
 
@@ -70,13 +66,13 @@ public class LoginActivity extends AppCompatActivity {
                 //if "remember me" checkbox is checked
                 SharedPreferences.Editor editor = pref.edit();
                 if (rememberMe.isChecked()){
-                    editor.putBoolean(PREF_LOGIN, true);
+                    editor.putBoolean(PrefData.PREF_LOGIN, true);
                 } else {
-                    editor.putBoolean(PREF_LOGIN, false);
+                    editor.putBoolean(PrefData.PREF_LOGIN, false);
                 }
                 editor.commit();
                 //navigate to tambah budaya activity
-                startActivity(new Intent(LoginActivity.this, TambahBudayaActivity.class));
+                startActivity(new Intent(LoginActivity.this, MemberAreaActivity.class));
                 finish();
             } else {
                 //username password tidak cocok atau belum terdaftar

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="16dp">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="SYARAT DAN KETENTUAN\nWARISAN BUDAYA INDOENSIA"
+		android:gravity="center"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginBottom="8dp"/>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:text="Semua member Warisan Budaya Indonesia harus menaati syarat dan ketentuan sebagai berikut:"
+		android:layout_marginBottom="4dp"/>
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="4dp">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="\u2022"
+			android:layout_marginRight="8dp"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="Tidak boleh mengusulkan budaya yang melanggar peraturan perundang-undangan Republik Indonesia."/>
+	</LinearLayout>
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="\u2022"
+			android:layout_marginRight="8dp"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="Catatan mengenal karya budaya umum dan singkat. Untuk hal-hal yang bersifat khusus, orang yang brkepentingan akan dipersilahkan menghubungi komunitas/ organisasi/ asosiasi/ badan/ paguyuban, kelompok social, atau perseorangan penanggung jawab karya budaya atau guru budaya/ maestro pemegang kekayaan intelektual atas karya budaya yang bersangkutan."/>
+	</LinearLayout>
+</LinearLayout>

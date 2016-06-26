@@ -3,7 +3,6 @@ package com.example.srin.warisanbudaya;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.*;
+import com.example.srin.warisanbudaya.helper.DBHelper;
+import com.example.srin.warisanbudaya.helper.Validator;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -22,18 +23,20 @@ import java.net.URL;
  * Created by SRIN on 4/11/2016.
  */
 public class RegisterActivity extends AppCompatActivity {
-    EditText nmdepan, nmblkg, email, pwd1, pwd2, telp;
-    CheckBox snk;
-    DBHelper mydb;
-    TextView klik, snkLink;
-    Validator val = new Validator();
-    ProgressDialog downloadProgressDialog;
-    final String DOWNLOAD_URL = "http://www.nus.edu.sg/comcen/gethelp/guide/itcare/wireless/NUS-WPA2%20Network%20Configuration%20Guide%20for%20Android%204.0.pdf";
+    private EditText nmdepan, nmblkg, email, pwd1, pwd2, telp;
+    private CheckBox snk;
+    private DBHelper mydb;
+    private TextView klik, snkLink;
+    private Validator val = new Validator();
+    private ProgressDialog downloadProgressDialog;
+    private final String DOWNLOAD_URL = "http://www.nus.edu.sg/comcen/gethelp/guide/itcare/wireless/NUS-WPA2%20Network%20Configuration%20Guide%20for%20Android%204.0.pdf";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrasi);
+
+        initView();
 
         mydb = new DBHelper(this);
         downloadProgressDialog = new ProgressDialog(this);
@@ -43,8 +46,36 @@ public class RegisterActivity extends AppCompatActivity {
         downloadProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         downloadProgressDialog.setCancelable(true);
 
+        klik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+				startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+				finish();
+            }
+        });
 
+        snkLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+				startActivity(new Intent(RegisterActivity.this, SnKActivity.class));
+//				final DownloadSNK downloadTask = new DownloadSNK(RegisterActivity.this);
+//				downloadTask.execute(DOWNLOAD_URL);
+//
+//				downloadProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//					@Override
+//					public void onCancel(DialogInterface dialog) {
+//						downloadTask.cancel(true);
+//					}
+//				});
+            }
+        });
+    }
 
+    private void insertToDb(DBHelper mydb, String name, String phone, String email, String pass){
+        mydb.insertUser(name,phone,email,pass);
+    }
+
+    private void initView(){
         nmdepan = (EditText) findViewById(R.id.etNamaDepan);
         nmblkg = (EditText) findViewById(R.id.etNamaBelakang);
         email = (EditText) findViewById(R.id.etEmail);
@@ -56,33 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         klik = (TextView) findViewById(R.id.tvKlik);
         snkLink = (TextView) findViewById(R.id.tvSnK);
-
-        klik.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
-
-        snkLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final DownloadSNK downloadTask = new DownloadSNK(RegisterActivity.this);
-                downloadTask.execute(DOWNLOAD_URL);
-
-                downloadProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        downloadTask.cancel(true);
-                    }
-                });
-            }
-        });
-    }
-
-    private void insertToDb(DBHelper mydb, String name, String phone, String email, String pass){
-        mydb.insertUser(name,phone,email,pass);
     }
 
     public void checkRegister(View arg0){

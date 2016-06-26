@@ -18,52 +18,30 @@ import android.widget.*;
  * Created by SRIN on 4/11/2016.
  */
 public class TambahBudayaActivity extends AppCompatActivity {
-    Button submit, keluar, unggah;
-    EditText nama, kabkot, kec, keldes, deskripsi, pelaku, deskfoto;
-    RadioGroup kondisi;
-    Spinner kategori, provinsi;
-    TextView filePath;
-    AlertDialog dialog;
-    ImageView imgView;
+    private Button submit, unggah;
+    private EditText nama, kabkot, kec, keldes, deskripsi, pelaku, deskfoto;
+    private RadioGroup kondisi;
+    private Spinner kategori, provinsi;
+    private TextView filePath;
+    private AlertDialog dialog;
+    private ImageView imgView;
     private static int RESULT_LOAD_IMG = 200;
-    String imgDecodableString;
-    final String PREF_NAME = "WBI_pref";
-    final String PREF_LOGIN = "isLogin";
+    private String imgDecodableString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tambahbudaya);
 
-        nama = (EditText) findViewById(R.id.etNama);
-        kabkot = (EditText) findViewById(R.id.etKabKot);
-        kec = (EditText) findViewById(R.id.etKec);
-        keldes = (EditText) findViewById(R.id.etKelDes);
-        deskripsi = (EditText) findViewById(R.id.etDeskripsi);
-        pelaku = (EditText) findViewById(R.id.etPelaku);
-        deskfoto = (EditText) findViewById(R.id.etPenjelasanGbr);
-
-        provinsi = (Spinner) findViewById(R.id.spProv);
-        kategori = (Spinner) findViewById(R.id.spKategori);
-        kondisi = (RadioGroup) findViewById(R.id.rgKondisi);
+		initView();
 
         final EditText[] fields = new EditText[]{nama, kabkot, kec, keldes, deskripsi, pelaku, deskfoto};
-
-        submit = (Button) findViewById(R.id.btTambah);
-        keluar = (Button) findViewById(R.id.btKeluar);
-        unggah = (Button) findViewById(R.id.btUnggah);
-
-        imgView = (ImageView) findViewById(R.id.imgView);
-
-        filePath = (TextView) findViewById(R.id.tvPath);
-
-
-        dialog = successDialog();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkFields(fields) && kondisi.getCheckedRadioButtonId() != -1) {
+					dialog = successDialog();
                     dialog.show();
                 } else {
                     Toast.makeText(TambahBudayaActivity.this, "Silakan lengkapi semua kolom isian dan pilihan!", Toast.LENGTH_SHORT).show();
@@ -79,17 +57,6 @@ public class TambahBudayaActivity extends AppCompatActivity {
                         android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 // Start the Intent
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-            }
-        });
-
-        keluar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = getSharedPreferences(PREF_NAME, MODE_PRIVATE).edit();
-                editor.putBoolean(PREF_LOGIN, false);
-                editor.commit();
-                startActivity(new Intent(TambahBudayaActivity.this, LoginActivity.class));
-                finish();
             }
         });
     }
@@ -130,6 +97,28 @@ public class TambahBudayaActivity extends AppCompatActivity {
                     .show();
         }
     }
+
+	private void initView(){
+		nama = (EditText) findViewById(R.id.etNama);
+		kabkot = (EditText) findViewById(R.id.etKabKot);
+		kec = (EditText) findViewById(R.id.etKec);
+		keldes = (EditText) findViewById(R.id.etKelDes);
+		deskripsi = (EditText) findViewById(R.id.etDeskripsi);
+		pelaku = (EditText) findViewById(R.id.etPelaku);
+		deskfoto = (EditText) findViewById(R.id.etPenjelasanGbr);
+
+		provinsi = (Spinner) findViewById(R.id.spProv);
+		kategori = (Spinner) findViewById(R.id.spKategori);
+		kondisi = (RadioGroup) findViewById(R.id.rgKondisi);
+
+
+		submit = (Button) findViewById(R.id.btTambah);
+		unggah = (Button) findViewById(R.id.btUnggah);
+
+		imgView = (ImageView) findViewById(R.id.imgView);
+
+		filePath = (TextView) findViewById(R.id.tvPath);
+	}
 
     private void resetFields() {
         nama.setText(null);

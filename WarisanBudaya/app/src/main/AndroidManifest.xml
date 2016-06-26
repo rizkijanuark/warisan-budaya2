@@ -19,6 +19,10 @@
         <activity android:name=".RegisterActivity"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".ProfileActivity"/>
+        <activity android:name=".SnKActivity"/>
+        <activity android:name=".MemberAreaActivity"/>
+        <activity android:name=".LihatBudayaActivity"/>
         <activity android:name=".SplashScreenActivity"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 			<intent-filter>

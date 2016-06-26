@@ -27,9 +27,9 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (isLoggedIn){
-                    startActivity(new Intent(SplashScreenActivity.this, TambahBudayaActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, MemberAreaActivity.class));
                 } else {
-                    startActivity(new Intent(SplashScreenActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
                 }
                 finish();
             }

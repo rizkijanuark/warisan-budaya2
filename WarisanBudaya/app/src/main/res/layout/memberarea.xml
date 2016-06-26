@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="16dp">
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="MEMBER AREA"
+		android:textColor="@android:color/black"
+		android:layout_gravity="center_horizontal"
+		android:layout_marginBottom="4dp"/>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="LIHAT BUDAYA"
+		android:id="@+id/btLihatBudaya"
+		android:layout_marginBottom="4dp"/>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="TAMBAH DATA BUDAYA"
+		android:id="@+id/btTambahBudaya"
+		android:layout_marginBottom="4dp"/>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="LIHAT PROFIL"
+		android:id="@+id/btProfil"
+		android:layout_marginBottom="4dp"/>
+	<Button
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="KELUAR"
+		android:id="@+id/btExit"/>
+</LinearLayout>

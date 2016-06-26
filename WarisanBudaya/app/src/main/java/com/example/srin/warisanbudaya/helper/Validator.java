@@ -1,4 +1,4 @@
-package com.example.srin.warisanbudaya;
+package com.example.srin.warisanbudaya.helper;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
