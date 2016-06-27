@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import com.example.srin.warisanbudaya.app.PrefData;
 
 /**
  * Created by Afkar on 6/26/2016.

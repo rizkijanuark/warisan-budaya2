@@ -6,7 +6,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import in.kumaha.afkar.kumahaincltd.helper.LruBitmapCache;
 
 /**
  * Created by Afkar on 3/17/2016.

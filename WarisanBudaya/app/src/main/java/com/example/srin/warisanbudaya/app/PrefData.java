@@ -1,4 +1,4 @@
-package com.example.srin.warisanbudaya;
+package com.example.srin.warisanbudaya.app;
 
 /**
  * Created by Afkar on 6/26/2016.
@@ -6,7 +6,10 @@ package com.example.srin.warisanbudaya;
 public class PrefData {
 
 	public static final String PREF_NAME = "WBI_pref";
+
 	public static final String PREF_LOGIN = "isLogin";
+	public static final String PREF_REMEMBER = "rememberME";
+
 	public static final String PREF_USER_NMDEPAN = "dpn";
 	public static final String PREF_USER_NMBLKG = "blkg";
 	public static final String PREF_USER_TELP = "telp";

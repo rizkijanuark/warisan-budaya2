@@ -10,14 +10,24 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.android.volley.*;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.example.srin.warisanbudaya.app.AppConfig;
+import com.example.srin.warisanbudaya.app.AppController;
 import com.example.srin.warisanbudaya.helper.DBHelper;
 import com.example.srin.warisanbudaya.helper.Validator;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by SRIN on 4/11/2016.
@@ -28,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     private DBHelper mydb;
     private TextView klik, snkLink;
     private Validator val = new Validator();
-    private ProgressDialog downloadProgressDialog;
+    private ProgressDialog downloadProgressDialog, progressDialog;
     private final String DOWNLOAD_URL = "http://www.nus.edu.sg/comcen/gethelp/guide/itcare/wireless/NUS-WPA2%20Network%20Configuration%20Guide%20for%20Android%204.0.pdf";
 
     @Override
@@ -40,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         mydb = new DBHelper(this);
         downloadProgressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
 
         downloadProgressDialog.setMessage("Mengunduh Syarat & Ketentuan");
         downloadProgressDialog.setIndeterminate(true);
@@ -142,12 +153,55 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Password tidak cocok", Toast.LENGTH_SHORT).show();
             } else {
                 // Validation Completed
-                insertToDb(mydb, name, phone, eml, pass1);
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                finish();
+//                insertToDb(mydb, name, phone, eml, pass1);
+				Map<String, String> params = new HashMap<>();
+				params.put("email", eml);
+				params.put("password", pass1);
+				params.put("nama_depan", firstName);
+				params.put("nama_belakang", lastName);
+				params.put("no_telp", phone);
+				register(params);
             }
         }
     }
+
+	private void register(final Map<String, String> params){
+		progressDialog.setMessage("Registering your account...");
+		progressDialog.show();
+
+		String url = AppConfig.URL_API + AppConfig.MEMBER_KEY + "register";
+		JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+			url, new JSONObject(params),
+			new Response.Listener<JSONObject>() {
+
+				@Override
+				public void onResponse(JSONObject response) {
+					Log.d("JSONObjectRequest", response.toString());
+					progressDialog.hide();
+					try {
+						if (response.getInt("status") == 1){
+							Toast.makeText(RegisterActivity.this, "Your account has been successfully registered!", Toast.LENGTH_SHORT).show();
+							startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+							finish();
+						} else {
+							Toast.makeText(RegisterActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				progressDialog.hide();
+				VolleyLog.e("Error: " + error.getMessage());
+				Toast.makeText(RegisterActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		// Adding request to request queue
+		AppController.getInstance().addToRequestQueue(jsonObjReq);
+	}
 
     private class DownloadSNK extends AsyncTask<String, Integer, String>{
 
