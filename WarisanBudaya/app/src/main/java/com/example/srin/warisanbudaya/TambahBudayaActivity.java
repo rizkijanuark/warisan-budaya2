@@ -1,5 +1,6 @@
 package com.example.srin.warisanbudaya;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +12,24 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.srin.warisanbudaya.app.AppConfig;
+import com.example.srin.warisanbudaya.app.AppController;
+import com.example.srin.warisanbudaya.app.PrefData;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by SRIN on 4/11/2016.
@@ -27,6 +44,9 @@ public class TambahBudayaActivity extends AppCompatActivity {
     private ImageView imgView;
     private static int RESULT_LOAD_IMG = 200;
     private String imgDecodableString;
+	private ProgressDialog progressDialog;
+	private Bitmap picture;
+	private String[] arrKondisi = {"Masih berkembang", "Sudah berkembang / Terancam punah", "Punah"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +54,7 @@ public class TambahBudayaActivity extends AppCompatActivity {
         setContentView(R.layout.tambahbudaya);
 
 		initView();
+		progressDialog = new ProgressDialog(this);
 
         final EditText[] fields = new EditText[]{nama, kabkot, kec, keldes, deskripsi, pelaku, deskfoto};
 
@@ -41,8 +62,26 @@ public class TambahBudayaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (checkFields(fields) && kondisi.getCheckedRadioButtonId() != -1) {
-					dialog = successDialog();
-                    dialog.show();
+					ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+					picture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+					byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+					String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+					Map<String, String> params = new HashMap<>();
+					params.put("email", getSharedPreferences(PrefData.PREF_NAME, MODE_PRIVATE).getString(PrefData.PREF_USER_EMAIL, ""));
+					params.put("nama_budaya", nama.getText().toString());
+					params.put("kategori", kategori.getSelectedItem().toString());
+					params.put("kondisi", arrKondisi[kondisi.getCheckedRadioButtonId()]);
+					params.put("provinsi", provinsi.getSelectedItem().toString());
+					params.put("kota", kabkot.getText().toString());
+					params.put("kecamatan", kec.getText().toString());
+					params.put("kelurahan", keldes.getText().toString());
+					params.put("deskripsi", deskripsi.getText().toString());
+					params.put("gambar", encoded);
+					params.put("deskgambar", deskfoto.getText().toString());
+					params.put("pelaku", pelaku.getText().toString());
+					insertDataBudaya(params);
                 } else {
                     Toast.makeText(TambahBudayaActivity.this, "Silakan lengkapi semua kolom isian dan pilihan!", Toast.LENGTH_SHORT).show();
                 }
@@ -86,7 +125,7 @@ public class TambahBudayaActivity extends AppCompatActivity {
                 cursor.close();
 
                 // Set the Image in ImageView after decoding the String
-                imgView.setImageBitmap(getScaledBitmap(imgDecodableString, 800, 800));
+                imgView.setImageBitmap(picture = getScaledBitmap(imgDecodableString, 800, 800));
 
             } else {
                 Toast.makeText(this, "You haven't picked Image",
@@ -147,7 +186,8 @@ public class TambahBudayaActivity extends AppCompatActivity {
 
     private AlertDialog successDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Tambah Data Budaya Berhasil!");
+		builder.setTitle("Berhasil");
+        builder.setMessage("Data Budaya berhasil ditambahkan ke database.");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
@@ -155,9 +195,58 @@ public class TambahBudayaActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-
         return builder.create();
     }
+
+	private AlertDialog failedDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Galat");
+		builder.setMessage("Terdapat galat saat memasukkan data ke database. Silakan ulangi lagi.");
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK button
+				dialog.dismiss();
+			}
+		});
+		return builder.create();
+	}
+
+	private void insertDataBudaya(final Map<String, String> params){
+		progressDialog.setMessage("Mengunggah data budaya...");
+		progressDialog.show();
+
+		String url = AppConfig.URL_API + AppConfig.BUDAYA_KEY + "insert";
+		JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+			url, new JSONObject(params),
+			new Response.Listener<JSONObject>() {
+
+				@Override
+				public void onResponse(JSONObject response) {
+					Log.d("JSONObjectRequest", response.toString());
+					progressDialog.hide();
+					try {
+						if (response.getInt("status") == 1){
+							dialog = successDialog();
+						} else {
+//							dialog = failedDialog();
+						}
+						dialog.show();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				progressDialog.hide();
+				VolleyLog.e("Error: " + error.getMessage());
+				Toast.makeText(TambahBudayaActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		// Adding request to request queue
+		AppController.getInstance().addToRequestQueue(jsonObjReq);
+	}
 
     private Bitmap getScaledBitmap(String picturePath, int width, int height) {
         BitmapFactory.Options sizeOptions = new BitmapFactory.Options();
